@@ -16,7 +16,7 @@ export function FinalSection() {
         }}
         className="mt-8 bg-gradient-to-br from-white  to-[#18181b] py-4 bg-clip-text text-center text-4xl font-medium tracking-tight  text-[#18181b] dark:text-transparent md:text-7xl"
       >
-        Thank you for the visit !
+        Thank you for the visit!
       </motion.h1>
     </LampContainer>
   );
