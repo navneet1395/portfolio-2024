@@ -23,7 +23,7 @@ export function FirstSection() {
         Welcome! I&apos;m Navneet Gupta
         </div>
         <div className="font-extralight text-base md:text-4xl dark:text-neutral-200 py-4">
-          Software Engineer | Entreprenur 
+          Software Engineer | Entreprenur | Freelancer
         </div><div className="flex gap-2 flex-wrap">
         <button className="bg-black dark:bg-white rounded-full w-fit text-white dark:text-black px-4 py-2">
          <Link href="https://www.linkedin.com/in/navneet-gupta-jklu/" target="_blank" ><LinkedinIcon/></Link>

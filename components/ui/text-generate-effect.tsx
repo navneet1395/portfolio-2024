@@ -25,21 +25,27 @@ export const TextGenerateEffect = ({
       }
     );
   }, [scope.current]);
-
   const renderLines = () => {
+    let isStrong = "strong"
     return (
       <motion.div ref={scope}>
         {linesArray.map((line, lineIdx) => (
           <div key={`line-${lineIdx}`} className="mt-4">
             <div className="dark:text-white text-black text-md leading-snug tracking-wide">
-              {line.split(" ").map((word, wordIdx) => (
-                <motion.span
+              {line.split(" ").map((word, wordIdx) => {
+                if (word.includes('<strong>')) {
+                  isStrong = "true"
+                }
+                if (word.includes('</strong>')) {
+                  isStrong = "false"
+                }
+                return <motion.span
                   key={`word-${wordIdx}`}
-                  className="dark:text-white text-black opacity-0"
-                >
-                  {word}{" "}
+                  className={`dark:text-white text-black opacity-0 ${isStrong==="true" ? 'font-bold' : ''}`
+                  }>
+                  {word.includes('<strong>') || word.includes('</strong>')  ? null : word }{" "}
                 </motion.span>
-              ))}
+              })}
             </div>
           </div>
         ))}
@@ -47,5 +53,5 @@ export const TextGenerateEffect = ({
     );
   };
 
-  return <div className="text-base">{renderLines()}</div>;
+  return <div className="text-justify">{renderLines()}</div>;
 };
