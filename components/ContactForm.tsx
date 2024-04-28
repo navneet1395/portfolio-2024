@@ -32,7 +32,7 @@ export function ContactForm() {
     });
   }
   return (
-    <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input absolute z-50 inset-0">
+    <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 m-2 shadow-input absolute z-50 inset-0">
       <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
         Get in Touch
       </h2>

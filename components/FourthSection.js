@@ -6,12 +6,12 @@ import {
 } from "./ui/background-gradient-animation";
 const FourthSection = () => {
   return (
-      <BackgroundGradientAnimation>
     <div className="h-[40rem] my-2 w-full dark:bg-[#18181b] relative flex flex-col items-center justify-center antialiased">
+      <BackgroundGradientAnimation>
         
         <ContactForm />
-    </div>
       </BackgroundGradientAnimation>
+    </div>
   );
 };
 
