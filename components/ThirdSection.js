@@ -9,7 +9,7 @@ const ThirdSection = () => {
         className="-top-40 left-0 md:left-60 md:-top-20"
         fill="#dce6fb"
       />
-      <div className="  max-w-7xl   relative z-10  w-full ">
+      <div className=" max-w-7xl   relative z-10  w-full ">
         <h1 className=" font-bold text-4xl md:p-24 p-4 md:text-5xl dark:text-white bg-clip-text  text-gray-900  bg-gradient-to-b from-neutral-50 to-neutral-400 dark:bg-gradient-to-b dark:from-gray-800 dark:to-gray-700">
           Work Experience
         </h1>

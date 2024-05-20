@@ -52,8 +52,8 @@ export function ContactForm() {
           <Input id="email" placeholder="xxx@fc.com" type="email" required/>
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
-          <label htmlFor="phone">Email Address</label>
-          <Input id="phone" placeholder="+32 21xx" type="tel"  />
+          <label htmlFor="phone">Phone Number</label>
+          <Input id="phone" placeholder="+91 21xx" type="tel"  />
         </LabelInputContainer>
         <LabelInputContainer className="mb-8">
           <label htmlFor="message">Leave a message</label>
