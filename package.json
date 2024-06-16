@@ -12,13 +12,13 @@
     "@vercel/analytics": "^1.2.2",
     "@vercel/speed-insights": "^1.0.10",
     "clsx": "^2.1.1",
-    "framer-motion": "^11.1.7",
+    "framer-motion": "^11.2.10",
     "lucide-react": "^0.376.0",
     "mini-svg-data-uri": "^1.4.4",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
-    "resend": "^0.16.0",
+    "resend": "^3.3.0",
     "tailwind-merge": "^2.3.0"
   },
   "devDependencies": {
