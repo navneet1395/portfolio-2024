@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Tree from "react-d3-tree";
 import CustomNode from "./familyCustomNode";
-import Modal from "./Modal"; // Import the modal
+import FamilyMemberAddModal from "./familyMemberModal"; // Import the modal
 
 const FamilyTree = () => {
   const [treeData, setTreeData] = useState(null);
@@ -73,7 +73,7 @@ const FamilyTree = () => {
           })
         }
       />
-      <Modal
+      <FamilyMemberAddModal
         show={showModal}
         handleClose={handleCloseModal}
         handleSave={addFamilyMember}

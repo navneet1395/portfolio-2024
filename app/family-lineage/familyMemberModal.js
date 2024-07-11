@@ -1,6 +1,6 @@
 import React from "react";
 
-const Modal = ({
+const FamilyMemberAddModal = ({
   show,
   handleClose,
   handleSave,
@@ -52,4 +52,4 @@ const Modal = ({
   );
 };
 
-export default Modal;
+export default FamilyMemberAddModal;
