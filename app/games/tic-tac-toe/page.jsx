@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Shape from "./shape";
 function Square({ value, index, onSquareClick }) {
   return (
     <button
@@ -63,6 +64,7 @@ const TicTacToePage = () => {
   const [boardValues, setBoardValues] = useState(Array(9).fill("")); // Initialize with 9 null values
   const [results, setResults] = useState("");
   function WinnerDeclaration() {
+    boardValues.filter((a) => a !== "").length === 9 && setResults("Draw");
     const winnerArray = [
       [0, 1, 2],
       [0, 4, 8],
@@ -133,6 +135,14 @@ const TicTacToePage = () => {
           </button>
         </div>
       </div>
+
+      <Shape
+        box={[
+          [1, 1, 1],
+          [1, 0, 1],
+          [1, 0, 0],
+        ]}
+      />
     </div>
   );
 };
