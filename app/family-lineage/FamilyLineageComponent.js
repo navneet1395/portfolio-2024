@@ -11,7 +11,7 @@ const FamilyTree = () => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    fetch("/family-lineage/api/get")
+    fetch("/family-lineage/api/get", { cache: "no-store" })
       .then((response) => response.json())
       .then((data) => setTreeData(formatTreeData(data.data)))
       .catch((error) => console.error("Error fetching tree data:", error));
