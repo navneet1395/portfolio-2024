@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Tree from "react-d3-tree";
 import CustomNode from "./familyCustomNode";
-import FamilyMemberAddModal from "./familyMemberModal"; // Import the modal
+import Modal from "./familyMemberModal";
 
 const FamilyTree = () => {
   const [treeData, setTreeData] = useState(null);
@@ -11,15 +11,32 @@ const FamilyTree = () => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    fetch("family-lineage/api/get")
+    fetch("/family-lineage/api/get")
       .then((response) => response.json())
-      .then((data) => setTreeData(data.data));
+      .then((data) => setTreeData(formatTreeData(data.data)))
+      .catch((error) => console.error("Error fetching tree data:", error));
   }, []);
 
+  const formatTreeData = (data) => {
+    const map = {};
+    data.forEach((node) => {
+      map[node.id] = { ...node, children: [] };
+    });
+
+    const tree = [];
+    data.forEach((node) => {
+      if (node.parent_id) {
+        map[node.parent_id].children.push(map[node.id]);
+      } else {
+        tree.push(map[node.id]);
+      }
+    });
+
+    return tree;
+  };
+
   const addFamilyMember = async () => {
-    if (newMemberName == "") {
-      alert("Enter Valid Name");
-    } else {
+    try {
       const response = await fetch("/family-lineage/api/update", {
         method: "POST",
         headers: {
@@ -32,17 +49,21 @@ const FamilyTree = () => {
       });
       const result = await response.json();
       if (result.success) {
-        setTreeData(result.data);
+        setTreeData(formatTreeData(result.data));
         setNewMemberName("");
         setParentName("");
-        setShowModal(false); // Close modal after adding
+        setShowModal(false);
+      } else {
+        console.error("Error updating tree:", result.error);
       }
+    } catch (error) {
+      console.error("Error adding family member:", error);
     }
   };
 
   const handleAddMemberClick = (parentName) => {
     setParentName(parentName);
-    setShowModal(true); // Show modal when "+" is clicked
+    setShowModal(true);
   };
 
   const handleCloseModal = () => {
@@ -73,7 +94,7 @@ const FamilyTree = () => {
           })
         }
       />
-      <FamilyMemberAddModal
+      <Modal
         show={showModal}
         handleClose={handleCloseModal}
         handleSave={addFamilyMember}
