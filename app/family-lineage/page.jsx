@@ -1,6 +1,9 @@
 import FamilyTree from "./FamilyLineageComponent";
 async function getData() {
-  const res = await fetch("http://localhost:3000/family-lineage/api/get", {
+  const res = await fetch(
+    // "http://localhost:3000/family-lineage/api/get"
+    "https://navneet-dev-portfolio.vercel.app/family-lineage/api/get"
+    , {
     cache: "no-store",
   });
   return res.json();
