@@ -1,100 +1,111 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Input } from "./ui/input";
-import { cn } from "@/utils/cn";
-import { sendEmail } from "@/actions/sendEmail";
 import { TextArea } from "./ui/textarea";
+import { sendEmail } from "@/actions/sendEmail";
+import { toast } from "react-hot-toast";
 
 export function ContactForm() {
+  const [loading, setLoading] = useState(false);
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const form = e.currentTarget; // Get the form element
+    const form = e.currentTarget;
     const target = e.target as typeof e.target & {
       name: { value: string };
       email: { value: string };
       phone: { value: string };
       message: { value: string };
     };
+
     const formData = {
-      name: target.name.value,
-      email: target.email.value,
-      phone: target.phone.value ?? "",
-      message: target.message.value ?? "",
+      name: target.name.value.trim(),
+      email: target.email.value.trim(),
+      phone: target.phone.value.trim(),
+      message: target.message.value.trim(),
     };
-    console.log("Form submitted", formData);
-    await sendEmail(formData).then((res) => {
-      console.log(res);
-      alert("You are connected with navneet");
-      form.reset(); // Clear the form fields after the alert
-    }).catch((err) => {
-      console.log(err);
-      alert(err)
-    });
+
+    try {
+      setLoading(true);
+      await sendEmail(formData);
+      toast.success("Message sent successfully!");
+      form.reset();
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to send message. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
   }
+
   return (
-    <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 m-2 shadow-input absolute z-50 inset-0">
-      <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
-        Get in Touch
-      </h2>
-      <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300">
-        Share your presence or ask for collaboration
-      </p>
-
-      <form className="my-8" onSubmit={handleSubmit}>
-        <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
-          <LabelInputContainer>
-            <label htmlFor="name"> Name</label>
-            <Input id="name" placeholder="Tyler" type="text" required />
-          </LabelInputContainer>
+    <form
+      className="bg-white dark:bg-zinc-900 shadow-lg rounded-lg p-6 space-y-6"
+      onSubmit={handleSubmit}
+    >
+      <div className="flex flex-col space-y-4">
+        <div className="flex flex-col">
+          <label
+            htmlFor="name"
+            className="text-sm font-medium dark:text-neutral-300"
+          >
+            Name
+          </label>
+          <Input id="name" placeholder="John Doe" type="text" required />
         </div>
-        <LabelInputContainer className="mb-4">
-          <label htmlFor="email">Email Address</label>
-          <Input id="email" placeholder="xxx@fc.com" type="email" required/>
-        </LabelInputContainer>
-        <LabelInputContainer className="mb-4">
-          <label htmlFor="phone">Phone Number</label>
-          <Input id="phone" placeholder="+91 21xx" type="tel"  />
-        </LabelInputContainer>
-        <LabelInputContainer className="mb-8">
-          <label htmlFor="message">Leave a message</label>
-          <TextArea placeholder="can we have zoom meeting ... "  id="message"/>
-        </LabelInputContainer>
 
-        <button
-          className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
-          type="submit"
-        >
-          Connect &rarr;
-          <BottomGradient />
-        </button>
+        <div className="flex flex-col">
+          <label
+            htmlFor="email"
+            className="text-sm font-medium dark:text-neutral-300"
+          >
+            Email Address
+          </label>
+          <Input
+            id="email"
+            placeholder="you@example.com"
+            type="email"
+            required
+          />
+        </div>
 
-        <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 h-[1px] w-full" />
+        <div className="flex flex-col">
+          <label
+            htmlFor="phone"
+            className="text-sm font-medium dark:text-neutral-300"
+          >
+            Phone Number
+          </label>
+          <Input id="phone" placeholder="+91 1234567890" type="tel" />
+        </div>
 
-    
-      </form>
-    </div>
+        <div className="flex flex-col">
+          <label
+            htmlFor="message"
+            className="text-sm font-medium dark:text-neutral-300"
+          >
+            Message
+          </label>
+          <TextArea
+            id="message"
+            placeholder="Type your message here..."
+            rows={4}
+            required
+          />
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        disabled={loading}
+        className={`w-full h-12 rounded-lg font-medium text-white ${
+          loading
+            ? "bg-gray-400 cursor-not-allowed"
+            : "bg-blue-600 hover:bg-blue-700 transition"
+        }`}
+      >
+        {loading ? "Sending..." : "Send Message"}
+      </button>
+    </form>
   );
 }
-
-const BottomGradient = () => {
-  return (
-    <>
-      <span className="group-hover/btn:opacity-100 block transition duration-500 opacity-0 absolute h-px w-full -bottom-px inset-x-0 bg-gradient-to-r from-transparent via-cyan-500 to-transparent" />
-      <span className="group-hover/btn:opacity-100 blur-sm block transition duration-500 opacity-0 absolute h-px w-1/2 mx-auto -bottom-px inset-x-10 bg-gradient-to-r from-transparent via-indigo-500 to-transparent" />
-    </>
-  );
-};
-
-const LabelInputContainer = ({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => {
-  return (
-    <div className={cn("flex flex-col space-y-2 w-full", className)}>
-      {children}
-    </div>
-  );
-};
