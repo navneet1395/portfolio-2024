@@ -80,7 +80,7 @@ const BackgroundGradient = ({
       )}
       style={{
         backgroundImage: `conic-gradient(${from}, ${via}, ${to})`,
-        "--conic-position": position,
+        backgroundPosition: position,
       }}
     ></div>
   );
